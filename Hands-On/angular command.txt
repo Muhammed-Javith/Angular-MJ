@@ -1,0 +1,19 @@
+Angular commands:
+
+install nodejs
+install vscode
+
+angular install: npm install -g @angular/cli
+angular install with version name: npm install -g @angular/cli@16.0.1
+angular uninstall: npm uninstall -g @angular/cli
+angular uninstall with version name: npm uninstall -g @angular/cli@16.0.1
+check version: ng version
+to see all cmd: ng help
+create new project: ng new #projectName
+component creation: ng g component #name 
+		    ng g c #name (shortly)
+component-inline-style creation: ng g c #name --inline-style  (here css files aren't generated (ts, html file generated))
+component-inline-template creation: ng g c #name --inline-template (here html files aren't generated(ts,css file generated))
+standalone component creation: ng g c #name --standalone (4 files cretaed wth standalone: true(component)property)
+create service: ng g s #servicename
+cretae class: ng g class #classname

@@ -1,0 +1,46 @@
+Angular 17:
+typescript :5.2
+nodejs:8.12 or newer version
+
+features:
+1.angular.dev
+	(previous - angular.io)
+2.new syntax for control flow in templates.
+ 	- new declarative is using @
+	old one:
+		<div #ngif = "isenabled"
+			welcome
+		</div>
+	new one:
+		<div @if = "isenabled"
+			welcome
+		</div>
+		@for(i of items; track i.name){
+			<li>{{i.name}}</li>
+		}@empty{
+			<li>no item</li>
+		}
+	similiar for else switch also...
+3.automatic migration to build-in control flow
+	ng g@angular/core:control-flow
+4.deferable view
+	- angular's "Defer" feature is a new template syntax that allows developers to define the circumstances
+	  under which specific elements or components should load.
+	  this is more advanced than the conventional lazy loading methods, which usually load
+	  components in response to changes in the path.
+5.build performance with esbuild
+	- generally, the angular cli is used to generate bundles using webpack.
+	  nevertheless, more recent and quicker tools are currently posing a threat to webpack.
+	- angular 17 comes with a stable version of angular cli by default for new angular projects with the application builder.
+
+6.enhanced support for server side rendering(SSR)
+7.automatic removal of css
+	- one of angular 12 features in the automatic removalof css from the dom
+	when the component is destroyed. it helps with the smooth functioning of 
+	your application without problems like RAM overheating
+8.opti-in support for view transition API
+	- if you want to change the content of DOM elements like div and animate it,
+	  the new browser API supports it.This view transition API is supported by multiple browsers including
+	  chrome,opera,chrome android, edge, samsung internet and web view android.
+
+

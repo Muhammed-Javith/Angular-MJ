@@ -1,0 +1,1011 @@
+Angular:
+	-SPA - single page Application
+		- whatever youn click in that page, the page will not load for every click.
+		  how?
+			All click changed happened within single html file. bcz of DOM
+			you can write logic in Angular based on  that logic Angular will work.
+			because of this refresh icon is not loading.
+	- Hot Module Replacement:
+		- when you change anything in code, without refreshing page change will be reflected.
+		  how it will done without refreshing?
+			-bcz of chunk file(runtime.js, polyfiles.js,style.js) in angular project.
+Feature:
+framework:
+	- component based framework
+	- mvc(model view component)
+
+Installation:
+1.install angular cli
+	- to make work easier and creation and handle of project easily.
+	- npm install -g @angular/cli
+	- to verify installation: ng version
+2.To create a project:
+	- ng new #AngularProjectName
+3.To run the project:
+	- ng serve
+	- http://localhost:4200
+4.Details:
+  1.package.json - have the dependency for angular project.
+  2.Angular.json - have the dependency only needed for angular framework.
+  3.node-modules - have the all node installation files here
+  4.src -our files related with project.
+	- app	- app.component.html which loads ui in browser.
+	- assets - images and files
+  5. .angular - contains cache related files
+	      - angular webpack
+	      - babel webpack
+  6. .editorconfig - vscode editor related file
+  7. .gitignore - whateever we mentioned  here will be avoided in git repository.
+  8. tsconfig.app.json - extended from tsconfig.json
+  9.tsconfig.json - configuration needed for typescript compiler.
+ 10.tsonfig.spec.json - typescript related file and only used at the time of testing. 	
+5.install bootstrap for css
+	npm install --save bootstrap@3 (version 3 is installed).
+	- to use this, open angular.json
+		"style" :[
+			"node-modules/bootstrap/dist/css/bootsrap.min.css"
+			]
+    	add the above to use bootstrap.
+angular workflow:
+	-according to our change (changing user interface -dom change/refresh/update) angular will work.
+	- angular performance is based on how dom is referred as past.
+	  dom refresh done at the particular component when it is needed.
+ - angular webpack:
+	add the files(runtime.js, polyfiles.js, styles.js) automatically.
+	- each file have each benefit and important one is main.js(our application code is there)
+	this webpack will start the angular development server.
+
+
+Angular Basics:
+Angular component:
+component:
+	- it will contain following:
+		- data
+		- html
+		- logic file
+	- multiple component used to create web application.
+	- app component is called as root component.
+	- app.component.html contains all component that we using in our project.
+	- each component conatains each html and css for that separately.
+	- each have logic so easily we able to understand.so if you create one component then
+	  you can use that component for multiple times.
+
+	
+How component works?
+	-app.component.html -  this file shows all context displayed in UI but really not like that.
+			       its because of index.html and it contains <app-root> component.
+				but how?
+		open app.component.ts
+			@component({
+				selector:'app-root',
+				template-url:'./app.componenet.html',
+				style-url:'./app.component.css'});
+		here template-url is the view file.
+	- now all app component files related to run within their selectors.(app-root)
+	  - index.file executed first and after this to find app-component selector app-root is used.
+	- how app-root is defined to use like this?
+		- under app-root , you can see runtime.js, vendor.js, main.js etc..,
+		  these scripts contains app-root details.
+		  when you run angular projects this script added automatically.
+	- main.js, polyfills.js, style.js, tests.js =>we don't have this js files but we have ts file that is converted to js.
+	- go and see main.ts - it will have details of app.module.ts and this app.module.ts will have the details of
+			       app.component.ts and this app.component.ts will have the selectors(app-root) details.
+			       this selectors mentioned in index.html.
+
+
+Decorator:
+	- adding function without modifying class.
+	- came after es6
+	- angular using this.
+	- angular having lot of default decorator.
+	- consider the following class:
+		class person{
+			fname;
+			lname;
+			constructor(fname, lname){
+				this.fname = fname;
+				this.lname = lname;
+			}
+		}
+	above class contains two properties are: fname and lname 
+	we going to add new function within the class and that function will display angular 12.
+	for that we need to modifying class.
+	- without modifying class we can do that using decorator.
+		function course(target){
+			object.defineProperty(target.prototype, 'course',
+					{value:() => "Angular 12"})
+			}
+		and the above function used as decorator like following:
+			@course  //decorator name.
+			class Person{}
+	when we call 
+		let asim =  new Person('asim', 'husssain');
+		console.log(asim.course()); //it will print angular 12.
+
+
+creating component without CLI:
+ src->app->create new folder server ->create new file server.component.ts
+ - open server.component.ts
+    expert class serverComponent{ } - server component class defined here.
+				    - expert used to export this component.
+   Angular should take this class as a component class for that we  need to add one decorator for this class.
+	- @component decorator is used.
+	- to use this import component package - import {component} from '@angular/core'
+	- @component({
+		selector : "app-server",
+		template-url: "./server.component.html"
+	 })
+	- under server folder create server.component.html which contains the following:
+		<p>Hello World</p>
+	- to work with this component we need to add this component we need to add this component under appmodule.ts
+	- open appmodule.ts
+		under declarations add server component.
+			declarations:[
+				servercomponent];
+		to work in this component import this in app.module.ts
+			import {servercomponent} from './server/server.component.ts'
+	- now component is registered.
+	- next we need load the component but already app-root component is loading.(in index.html contain app-root which is loading).
+	- now go to app.component and there add <app-root> so that it will load.
+
+summary:
+1.create app.component.html
+2.create app.component.ts
+3.create app.component.css
+4.register the component in app.module.ts
+5.to load component give the component selector details in default component.
+
+create component with cli command:
+	- ng  generate component server 
+			or 
+	- ng g c server
+above command done all the things that we did manually above.
+above command did the following things.
+	1.component creation
+	2.component registration
+but component loading we need to done manually and need to add <app-root> selector in app.component.html
+
+
+component templates:
+	@component({
+		templateURL:''});
+if you have less html or single line html then you can use template instead of templateURL
+ex:
+	@component({
+		template: '<app-server>.....</app-server>'});
+- if we want split two lines then use (back tick (`)) if we need .
+- for multiple lines use templateURL.
+
+
+componet styles:
+	@component({
+		style URLS:''});
+
+
+selector:
+
+1.Attribute Selector:
+	selector: ['app-server'];
+	- in app.component.html use like this. <div app-server></div>
+2.class selector:
+	selector: .app-server;
+       - in app.component.html use like this. <div class = "app-server"></div>
+notes:
+	1.attribute selector: loads on attribute
+	2.class selector: loads on class
+	3.name selector: loads on element.
+
+DataBinding:
+	- string interpolation
+	- making connection between component and view.
+	- if we change data in component then it will reflect in view and vice versa.
+   - for component html and ts file both are necessary but both in different format then how will they connect?
+		throught the data binding.
+   -  component.ts -> contains some information to do work.
+      component.html -> contains some information to do show.
+	- these two files must be integrated  for that we using data binding.
+	- data binding done by string interpolation.
+	- ex: {{data}} - through we can display the value in html from .ts file.
+- Example:
+app.component.ts
+	import....
+	export class Appcomponent{
+	name:string = "javith";
+	age:number = 28;
+	getCity(){
+		return 'chennai';}
+app.component.html
+	<p>hi {{name}} </p>
+	<p> age is {{ age }} </p>
+	<p> city: {{ getcity()}}</p>
+here we can do calculation also.
+	<p>100*80= {{100*80}}</p>
+
+
+Property Binding:
+	- here we don't use string interpolation.
+	- like data binding,  we can share the information from ts to html file using  property binding.
+	- syntax: [property] = "data";
+	  ex: [innerText] = "title";
+app.component.html:
+	<button class = "btn btn-sucess" [disabled] = "isDisabled">clickme</button>
+app.component.ts:
+	import....
+	export..{
+	isDisabled:boolean =  true;}
+if we use string:
+app.component.html:
+	<p [innerText] = "name"></p>
+app.component.ts:
+	import....
+	export..{
+	name  = "Javith";}
+
+
+Event Binding:
+	ts file (send data)---->html file (through data/property binding)
+	ts file (send data/event) ----> html file (through event binding)
+	- (event) - "function()"
+app.componenet.html:
+	<button class = "btn btn-primary" (click) = "changeName()"> change</button>
+app.component.ts:
+	import..
+	export..{
+	name:String = "Javith";}
+	changeName(){
+	this.name = "Javith";}}
+
+passing data  using event data binding:
+app.component.ts:
+	export class AppComponent{
+	name:string = "javith";
+	changeName(event:Event){
+	this.name = (<HtmlElement>event.target).value;
+note: here if you not assigning string name then use like this: name!:String.
+app.component.html:
+<input type =  "text" (input) = "changeName($event)">
+<p>{{name}}</p>
+
+oneway binding:
+	- data will come from one end.
+	- when component sends data to view, view can change and display but component not 
+	  aware of this change and vice versa.
+two way data binding:
+	- to simplifies above event-binding
+	-data comes from two ends.
+ng Model:
+	one of the directives in the angular used to achieve two way binding.
+app.component.html:
+	<input type = "text" [(ngModel)] = 'name'> //this name can be change through form as well.
+	<p>{{ name }}</p>
+- in app.module.ts add form module as well.
+
+
+Directives:
+	- changes behaviour or apperance or layout of the elements.
+	- it will decide, elements what should do within dom.
+what should directives do?
+	- show/hide elements
+	- change the behaviour of element
+	- based on data make element as list.
+- how should be the element in dom is decided by directives.
+types:
+1.component directives - alreadyb discussed above
+2.structural directives - ngif, ngfor, ngswitch
+3.attribute directives
+
+ngfor:
+	~~similiar to ngrepeat.
+	- get the array data made element in html.
+	- local variables used in ngfor is(index, first, last, odd, even and trackby)
+ex:
+app.component.ts:
+	export class Appcomponent{
+		title = 'Top 5 movies';
+		movies:movie[] = [
+			{title:'x', dir:'y'}
+			{title:'y', dir:'z'}]
+	}
+	class Movies{
+	title !: string;
+	dir !: string;
+	}
+app.component.html
+	<h1>{{title}}</h1>
+	<ul>
+	<li *ngFor = "let movie of movies">
+	{movie.title} - {{movie.dir}}
+	</li>
+	</ul>
+if you want table format then change the following in html code:
+	<div class = "panel panel-primary">
+	<div class = "panel-heading">
+	{{ title }}
+	</div>
+	<div class = 'panel-body'>
+	<div class = 'table-responsive'>
+	<table class = 'table>
+		<thead>
+			<tr>
+				<th>title</th>
+				<th>dir</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor = "let movie of movies">
+				<td>{{movie.title}}</td>
+				<td>{{movie.dir}}</td>
+			</tr>
+		</tbody>
+
+for index variable usage:
+	<tr>
+		<th>SNO</th>
+	</tr>
+	<tbody>
+		<tr *ngFor = "let movie of movies", let i = index">
+				<td>{{ i+1 }}</td>
+				<td>{{movie.title}}</td>
+				<td>{{movie.dir}}</td>
+		</tr>
+	</tbody>
+here,
+	index - to give index values.
+	odd - if element is odd returns true else false
+	even - if element is even returns true else false
+implementation:
+	<tr *ngFor = "let movie of movies", let i = index" let o odd; let e = even;
+	     [ngclass] = "{odd:o, even:e}">
+	or
+	     [ngclass] = "{'bg-sucess': o, 'bg-danger':e}">
+
+similar to odd or even we have first and last:
+instead of odd or even use first and last like let first =f;
+	first: if elements  is first then return true else false.
+	last: if elements is last then return true else false.
+
+trackby:
+	when we do loop we don't have performance issue that's why we used trackby.
+- in the above example ngfor creates table based on our input. 
+- based on our template angular will create table  or element anything. this is called rendering.
+  when rendering happening, ngfor directive create reference for all data to identify each element.
+  so that ngfor directive knew that if new element is came or not.
+- if array has new data, ngfor knew this is new data then ngfor doesn't do the full render instead of this,
+  it do the rendor for new element alone.(no full rendor).
+  so performance isnot affected.
+- if any data changed or replaced in exisiting array ngfor do the above thing so performance won't affected.
+  it's all done in array data within component.
+- if data is from backend or json, the reference data already there will be deleted so full rendor will happen.
+  it will make performance slow.(angular performance)
+  to avoid this, we go for trackby.
+- in trackby we give certain condition like, (take fname, if data changed in fname then do the render otherwise move to next or avoid).
+  if data is same no need to render.
+<tr *ngfor = "let movie of movies";
+     trackby : trackByFn;">
+in component.ts:
+	trackByFn(index, item){
+		return item.title;} //based on title render will happen.
+
+
+ngif:
+   syntax:
+	<div *ngIf = "condition">
+		This is shows if condition true
+	</div>
+app.component.html:
+	<h1>hi</h1>
+	<p *ngif = 'false'>text is rendered when condition is true></p>  //hi alone print if false 
+									// hi and p tag will print if true.
+hidden vs ngif
+<p [hidden] = "false">hi</p> in developer tools you can check this text is hidden.
+
+hidden:remove the particular text is in element.
+ngif:rempove the element completely.
+ts file:
+	export...{
+	result:boolean= false;}
+html file:
+	*ngif = "result"
+like this also yu can use.
+
+elseif:
+ - if ngif is false then you can give else block as well.
+	<p *ngif = "result"; else elseBlock;">
+	<ng-template #elseBlock>
+		text is volume high
+	</ng-template>
+
+thenBlock:
+	<p *ngif = "result"; then thenBlock; else elseBlock;">
+		This is if block</p>
+	<ng-template #thenBlock>
+		text is volume high - then Block
+	</ng-template>
+	<ng-template #elseBlock>
+		text is volume high
+	</ng-template>
+
+ngswitch:
+	- like switch case.
+component.ts:
+	export ..{
+		 num =0;{
+component.html:
+	<input type = "text" [(ngModel)] = "num">
+	<div [ngswitch] = "num">
+	<div *ngswitchcase="1">one</div>
+	<div *ngswitchcase="2">two</div>
+	<div *ngswitchcase="3">one</div>
+	
+Attributive Directive:
+	- change the apperance and behaviour
+1.ngclass
+.css file:
+.primary{
+color:red;}
+.secondary{
+color:greem;}
+.big{
+font-size:20px;}
+.small{
+.font.size:10px;}
+html file:
+<div class = "primary>sample text</div>  //in html
+<div [ngclass] = "['primary']"></div> //single class added.
+<div [ngclass = "[primary','big'];></div> //multiple class added
+
+<div [ngclass]= '{'primary':false}"> //used as object.
+<div """""""""{'primary': enbledRed}" // to use above object we need to declare this in html
+2.ngStyle
+html
+<div [ngstyle] = "{'color': 'red'}">Hi</div>
+based on condition:
+ts file:
+export....{
+	status =  "errors";}
+<div [ngstyle = "{'color':status=='error'?'red':'blue'}">hi</div>]
+
+
+custom directive:
+
+create folder directive
+run cmd to create custom directive: ng g d direct/update  --under direct folder update directive created.
+
+
+pipes:
+	- used to display the original data in templates as special.
+ - to display date in proper format: use datepipe.
+- to covert lower to upper case : use UPPERCASE PIPE and LOWERCASE pipe for vice versa.
+- to slice we have slice pipe
+ex:
+ts file:
+	export...{
+		toDate =  new Date();}
+html file:
+	<p>unformatted date: {{ toDate }}</p>
+	<p> formatted Date: {{ todate | date }}</p> [datapipe used here]
+			{{ toDate | date: 'medium' }} //date with parameters
+					: 'short" //display date in integer
+					: "full' //date in full format.
+{{message | uppercase/lowercase}}
+{{message | slice:11:20}}
+		here 11 arg1 index
+		     20 arg2 index
+		means 11:19 is displayed not 20
+
+currency pipe:
+ts:
+price =125;
+html:
+<p> {{ price | currency }}</P>
+<p>{{ price | currency:"INR"}}></p>
+
+
+async pipe:
+	we send api request and will get the data and we used that data to show in angular. for this async used.
+
+custom pipe:
+	ng g P pipes/mypipe
+	above command create mypipe under pipes folder.
+instead of pipe you can use functions as well.
+
+
+sharing the data between components:
+	we going to get inputs from user through form component.	
+	from form component we send the data to list component.
+	the list compoonent will display the data .
+	ng g c form
+	ng g c list
+approach 1: parent->child relationship.
+form.html:
+export class{
+ cars.string[] = [];
+ carName = "";
+ addcar(){
+ this.car.push(this.carName);
+this.carName = "";
+console.log(this.cars);}}
+form.html:
+<form action = "">
+<label for = ">carName:</label>
+<input type = "text" name= "carName"[(ngModel)] = "CarName">click
+<button (click) = "addcar">submit</button>
+
+app.component.html:
+<app-form></app-form>
+
+list.ts:
+export..{
+cars:string[] = [];}
+list.html:
+<div *ngif = "cars.length>0" then carList; else nodata"></div>
+<ng-template #carList>
+<ul>
+<li *ngfor = "let carName of cars"><{{ carname }}</li>
+</ul>
+</ng-template>
+<ng-template #Nodata>
+<p>No Date</p>
+</ng-template>
+
+now we need to make connection for that we need mention <app-list>selector in <app-form>.
+so the data transferred from parent to child.
+to do this use @Input decorator(from parent to child)
+add the following in app.component.html
+
+after element add 
+<br><br>
+<app-list></app-list>
+
+in list.ts looks following:
+
+list.ts:
+export..{
+@Input('carsInput') cars:string[] = [];}
+
+now open form.comp.html
+<app-list [carsInput] = "cars"></app-list>
+
+
+approach 2: child to parent
+	use @output decorator.
+modify the code
+
+@viewchild(similar to @Input and @output)
+	- take data from child component.
+
+
+component lifecycle:
+component->created->property changes -> content loaded-> content changed ->view loaded->view changed->destroyed
+when these happens angular gives some methods to do our work.
+ngonchanges -> ngonInit-> ngdocheck -> ngAfterContentInit -> ngafter viewpoint ->ngonDestroy->ngonchanges
+
+ngonchanges: it is called whenever component input property value changes.
+ngoninit: it will call after ngonchanges and called at the time of creation.
+ngdocheck: ngchanges doesn't support always and object.
+	   to avoid this issue we use docheck() is there.
+	  - before ngonchanges  it will called.
+	 - this method is called whenever keyboard and mouse events are called.
+ngdestroy:called at the time of component destroy.
+	  when the component after we hiding/destroying, it should come with new data(fresh data).
+	  if you don't want existing data then you should keep the code between this ngon destroy.
+
+
+Angular forms:
+features/usage:
+1.initialize forms fields
+2.get form data
+3.track changes
+4.form validation
+ 2 approaches:
+1.template driven form
+2.reactive form
+
+1.template driven form:
+	1.form operations handled in template
+	2.small code need to be written in component.
+- ngModel requires FormsModule - used in template driven form.
+- ng value - to give value in value variables in option <select tag>
+ - use ngform directory 
+ - to create form ng g c template-driven-form.
+- when we use 'ngform' angular converts all the form element to  template driven form.
+ngform:
+	- we don't need add it directly.
+	- whenever it meets <form> element in template angular form then ngform directly automatically.
+	- so now ngform takes the control of all elements in form.
+	- how it takes control?
+		- ngform creates one single object for all elements with <form> </form>
+		- that object is called formgroupInstance or formgroup.
+		- through this form group we can create formcontrolinstance .
+		  to each element within the form group instance to control the element individually.
+	- you can see this detail in console in developer tools.
+ - within the form group may be you will have another formgroup also.(nested group)
+
+2.reactive form:
+	- model driven form.
+	- ng g c reactive-form.
+	- template driven form, formgroup, control all things added automatically but in reactive form all
+	  needs to be implemented in component manually.
+
+HttpClient:
+- when you enter anything in google.com search box the page will refreshing.
+ - when you enter url browser in refreshing when you sent request.
+   this is the issue in angular.
+   to send request browser needs to be refreshed.
+- browser contains angular app now. when we logged in angular app and we planning to get user list data by sending request to server.
+  asusal, when send request if browser is refreshed the angular app loads again. so after refresh, angular comes to those page when
+  it is started/opened initially.
+  if response came also angular doesn't know about the response for what is coming. so angular app forget everything if it refreshed.
+  to resolve this issue we use HttpClient  for angular app.
+- one of library in angular app.
+- because of this we can send the http request and get http response without loading, refreshing the browser.
+
+jsonplaceholder.typcode.com is a website used for fakeapis for testing purpose.
+
+Angular router:
+- based on the url you can visit the individual/separate page.
+to do the above things we need angular router.
+
+how angular router work?
+ - when you enter any url,(if that is url) we instructed angular router to load component already.
+   according url to that angular will load the component.
+   this is the job of angular router.
+const approutes: Routes=[
+{path:'', component:Home component},]}
+- import router module.
+- in app.component.html add <router-outlet></router-outlet>
+
+Dynamic Routing:
+- data came from service to runtime(this time we use dynamic routing).
+child routing:
+	- call one page within another page.
+
+	
+
+
+
+
+Module:
+	app.module.ts(module file)
+- module in angular refers to a place where you can group the components,directives,pipes and services which are related to applications.
+
+
+services:
+	 consider one scenerio,  now you using 2 components.
+	in this 2 components you are going to consume same kind of data.
+	at that situation, you will do changes in component file and done the binding in property file.
+	so here for same data, duplicate is happening.
+	- to avoid duplicate, you can kept the data globally and you can access it through all component.
+        for this function. To do this we have services.
+	
+lazy loading in angular:
+why lazy loading? - to improve performance.
+	- whatever component created in angular project that will imported and registered in appmodule.ts.
+	  if we have more than 100 component if we define in app.module.ts also it will work but it will take time to load
+	  we need to wait. 
+          this affect the performance of angular,
+        - to avoid this we use lazy loading concept.
+what is lazyloading?
+	- that component or module will be load if it's required.
+          if not required it will not call defaultly.
+
+boostrap:
+	npm install boostrap
+angular boostrap:
+	ng add @angular/localize
+	npm install @ng-boostrap/ng-boostrap
+ why use this?
+	no need to add bootstrap.js or min.js
+	above packahges done all the things.
+
+Material-UI:
+	kind of library
+	perfect look and feel for exp.
+use:
+	design should be perfect.
+	animation/sliding effect line
+	mobile application.
+install: ng add @angular/material
+- import multislider and use.
+
+
+to deploy or create build run  ng build
+	the loading page we used it as default. sometimes we will add subsite in any of website with alias name
+	to handle this, we can build with command.
+	- ng build --base-href/customportal.
+
+cookies in angular:
+	-ngx-cookie option is used.
+install cookie
+	npm install ngx-cookie-service
+go to app.module.ts
+	import this and add its provider
+		providers:[cookieservice]
+
+session storage vs local storage:
+session storage:
+	it is a popular choice when it comes to storing data on a browser.
+	it enables developers to save or retrieve different values.	
+	it only keep data for a particular session.
+	this data is cleared once the user closes the browser window.
+syntax:
+	sessionStorage.setItem("test","test")
+	sessionstorage.getitem("test")
+LocalStorage:
+	- it is a way to store data on the client's computer.
+	- it allows the saving of key/value pairs in a web browser and it stores data with no expiration date.
+	- we can clear this data by using the load storage method.
+Angular Observable:
+	- an observable is basically function that can return a stream of values to an observer overtime,
+	  this can either be synchronously or  asynchronously.
+	- it used from rxjs(3rd party library)- reactive extensions for javascript.
+	npm install --save rxjs.
+1.Normal function:
+	function fn(){
+		console.log("star display");
+		return 100;
+	}
+	var value = fn();
+	call('end');
+2.Arrow function
+	function fn =() =>{
+		call('start');
+		return 100;
+	}var value =fn();
+	 cl('end');
+3.obervable:
+	const myobs$ = new observable(obs =>
+	{
+		cl('start'):
+		obs.next('100'):
+		cl('end'):
+	}
+`	myobs$.subscribe(sub=>{
+		call(sub);});
+
+Firebase:
+- cloud infrastructure
+ - google product(firebase.google.com)
+- those who are creating androif application they facing problem while they creating backend services.
+  (handling is not easy - (server side code, db))
+- to simplify that google introduced firebase.
+- through the firebase we can create backend service quickly).
+  you can integrate google services with these.
+  building app fast without managing infrastruture.
+  functiionalities like analytics, db, messaging and crash reporting.
+google firebase usage:
+1.quality insurance - helps you find bugs and crashes.
+2.google analytics - tracks key metrics and events.
+3.marketing stack - lets you perform a/b test and send push notification.
+4.Hosting - offer baas.
+
+why firebase not aws or heroku?
+- offers quickstart path to get your app in the hands of users.
+- minimization of cloud computing costs.
+- excellent developer experience
+- maximization of feature delivery per hour spent on developer.
+
+firebase developer should know:
+- use firebase cli tools to manage deploy an app.(hosting)
+-  setup basic user auth with google sign-in (authentication)
+- create firestore database records and listen to change in realtime.(firestore)
+note: 	
+	cloud firestore and real time db both are same but recommend to use cloud firestore db.
+firebase:
+create firebase project:
+1.signin firebase.google.com with gmail
+2.add project -> give name ->continue -> create project
+3. click settings(left top) -> general-> </> select angular or react -> give name -> registerapp ->
+   copy content of db and auth details ->continue to console
+
+firebase cli tools:
+- npm install -g firebase --tools
+- login automatically
+- open vs code and automatically code.
+-firebase login
+>firebase init
+>y
+>select Hosting , Emulator [space key]
+>existing
+>public
+>y
+>n
+>no
+>*select hosting emulator
+>8000
+>y
+>nan
+>y
+
+now installation is completed.
+
+>firebase emulator: start [To start firebase]
+>firebase deploy [deploy completed in hosting]
+
+hosting:
+	cdn - content delivery network
+	- fast and secure web hosting
+	- content will be cache in worldwide.
+	- if it is means it will take time to get response.
+	- once done hosting url, https://sjjsjjdjd
+	- this is livecode
+	
+
+ngrx state management:
+	- reactive state for angular.
+	- for managing state in angular.
+state management: transfering data between componenet.
+	- only for biggest application and smallest application not needed.
+- we can able to share data by following ways.
+	1.using decorator(input/output)
+	2.using services
+	drwabacks of servics:
+		need to create and register for all component.
+	3.above 2 ways are bit complicate so we going ngrx
+-ngrx ->
+	- kind of framework for building reactive application in angular.
+	- used for organizing and handling state-management.
+	- inspired from redux pattern.
+why ngrx?
+	ex:app comp have a and b comp.
+	   a comp have c and child comp 
+	   c comp have e and f child comp.
+like that b  have g and h comp
+	  h comp have i comp.
+if you want to share data from to e then we first share to a then to c then to e.
+but we can't share from e to i bcz i belongs b comp(i child of b part group.)
+so we came for ngrx to avoid.
+to avoiding this situation we have store and that store have all th component in information.
+so if you need to some details just we need to subscribe.
+so if i just modify any data in e comp then data reflected automatically in store.
+so if any data change in my store that is reflected in i comp.
+
+redux pattern:
+5 parts:
+1.store
+2.actiosn
+3.reducers
+4.selectors
+5.effects
+
+
+
+workflow:
+1.data flow always in single direction.
+2.if any action happened in component then action happened with 
+  dispatch method.
+3.in this action we have the action type and execute particular action.
+4.once action is completed we using reducer to update our store.
+5.so once you got instruction fromreducer then store modify existing data to new data.
+6.here selectors just acting like a subscriber.
+7.effects handling the side effects.
+8.effects mostly working on side effects.
+
+
+STATE
+=======
+* State is an  JSON object it can hold any type of data
+*  Un shared data, Form data & Router data no need to keep in the state
+*  State data can be changed but structure never changed
+
+ACTIONS
+=========
+*  Any event performed in component need to dispatch action using action creators.
+*  Each action has the type property
+*  Action name should be unique
+*  Using payload option we can send data.
+
+REDUCERS
+==========
+* Reducers are pure functions.
+* It takes action & initial state as the input
+* Reducer will calculate/finalize the data from action & initial state.
+* Final state data will be available in store.
+
+
+
+flow:
+1.first action will go to reducer when you add new customer.
+2.in action you will have new data with old data.
+3.once action reached reducer then reduce will do state changes.
+4.now after state changed(new data added to list) reducer send to store
+5.store is kind of container which contains all state.
+6.if customer view component need to display this data then it needs to access that state.
+7.we need particular data in the state. to get that particular data we using selector.
+8.using selector component will take that data and displays in UI.
+note:here we not using fx 
+
+ui comp-> action -> reducer -> store -> selectors to access store
+
+setup:
+1.to update angular:
+	 ng update
+if needed do git stash
+	 ng update @angular/cli
+then do git stash pop
+
+
+
+ngrx setup:
+run cmd one by one
+1.ng add @ngrx/store@16.2.0
+  or npm i @ngrx/store@16.2.0
+
+stesp:
+1.create service: ng g s shared/master
+2.right click app folder and create following files under shared/store:
+	counter.state.ts
+	counter.action.ts
+	counter.reducer.ts
+3.create json object in counter.state.ts
+4.create a action method with type in action.ts
+5.next reducer.ts
+	- it will take two inputs.one is action and another one is state.
+	- based on the action state will change.
+	- write code.
+6.register our store in app.module.ts.
+7.create two components
+	ng g c component/counterbutton
+	ng g c component/counterdisplay
+8.write code
+9.to pass data
+	ng g c component/customcounter
+10.create customincrement action in action file.
+
+
+
+
+
+
+
+
+
+if needed:
+	ng add @ngrx/schematics@latest or 
+	ng add @ngrx/schematics
+npm install @ngrx/store --save 
+npm install @ngrx/store @ngrx/effects @ngrx/store-devtools @ngrx/schematics --save
+
+
+   
+Store:
+- component related data
+- data can't change and take easily.
+- we can create n no of stores.
+- ng generate store state --root --module app.module.ts or 
+  ng generate @ngrx/schematics:store State --root --module app.module.ts
+	root -> this state not going to use on whole application.
+		going to use only in particular module so we give root flag with
+		module details.
+	module.ts - here we give to import the state details in app.module.ts
+->create ng g class models/customer.
+
+
+
+
+
+projects:
+install vscode
+install angular cli - npm i @angular/cli@16.2.11
+to check version ng --version
+to create project ng new #projectname or
+		  ng new angular-state-management --style=scss --routing=false
+to start ng serve
+unit test via curma - ng test
+end-to-end test - ng e2e
+build project - ng build
+
+
+angular cli command:
+1.ng g c login - component creation
+2.ng g module access -  module created
+3.ng g service servicelogin -  create service
+4.ng g class modesl/cus -  to create class
+npm install @ngrx/store --save 
+npm install @ngrx/effects --save
+npm install @ngrx/entity --save
+npm install @ngrx/store-devtools --save
+
+angular 17:
+	ng new #prjname --no-standalone 
+so you will get app.module.ts
