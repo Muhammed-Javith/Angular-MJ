@@ -1,0 +1,1 @@
+here component created with the help of command and tested

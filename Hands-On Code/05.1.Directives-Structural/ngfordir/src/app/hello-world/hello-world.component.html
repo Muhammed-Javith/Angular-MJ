@@ -1,0 +1,146 @@
+<h1>{{title}}</h1>
+<ul>
+    <li *ngFor="let movie of movies">
+        {{movie}}
+    </li>
+</ul>
+<h1>{{TitleName}}</h1>
+<ul>
+    <li *ngFor="let lione of movieslist">
+        {{lione.moviename}} - {{lione.director}} - {{lione.cast}}
+    </li>
+</ul>
+<div class="panel panel-primary">
+    <div class="table heading">{{TitleName}}</div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie Name</th>
+                        <th>Director</th>
+                        <th>Cast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let lione of movieslist">
+                        <td>{{lione.moviename}}</td>
+                        <td>{{lione.director}}</td>
+                        <td>{{lione.cast}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<h2>User List</h2>
+<ul>
+    <li *ngFor="let user of users">
+        {{ user.name }}
+    </li>
+</ul>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div class="panel panel-primary">
+    <div class="table heading"><br>{{TitleName}} for index implementation</div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie Name</th>
+                        <th>Director</th>
+                        <th>Cast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let lione of movieslist; let i =index">
+                        <td>{{i+1}}</td>
+                        <td>{{lione.moviename}}</td>
+                        <td>{{lione.director}}</td>
+                        <td>{{lione.cast}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="table heading"><br>odd even Implementation </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie Name</th>
+                        <th>Director</th>
+                        <th>Cast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr 
+                    [ngClass]=  '{"bg-success":o, "bg-danger":e}'
+                    *ngFor="let lione of movieslist; let i =index; let o =odd; let e = even;">
+                        <td>{{i+1}}</td>
+                        <td>{{lione.moviename}}</td>
+                        <td>{{lione.director}}</td>
+                        <td>{{lione.cast}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="panel panel-primary">
+    <div class="table heading"><br>first and last index Implementation </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie Name</th>
+                        <th>Director</th>
+                        <th>Cast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr 
+                    [ngClass]=  '{"bg-success":f, "bg-danger":l}'
+                    *ngFor="let lione of movieslist; let i =index; let f = first; let l = last;">
+                        <td>{{i+1}}</td>
+                        <td>{{lione.moviename}}</td>
+                        <td>{{lione.director}}</td>
+                        <td>{{lione.cast}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,10 @@
+<h1>You have clicked {{ clickCount}}</h1>
+<button (click) = "clickme()">Clickme!</button>
+
+<h1> event handling below:</h1>
+<br>
+Type Something:<input type="text"(input)="handleInput($event); value1 =$any($event.target).value"><br>
+<br>
+With HandleInput<p>{{value}}</p>
+<br>
+With HandleInput<p>{{value1}}</p>

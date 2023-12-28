@@ -1,0 +1,20 @@
+h3{
+    color: crimson;
+    font-variant: small-caps;
+}
+h1{
+    font-size: 40px;
+    color: darkmagenta;
+    font-style: bold italic;
+    font-size: 20px;
+}
+h2{
+    color:forestgreen;
+    font-size: 20px;
+    
+}
+p{
+    color:rgb(55, 12, 163);
+    
+    
+}

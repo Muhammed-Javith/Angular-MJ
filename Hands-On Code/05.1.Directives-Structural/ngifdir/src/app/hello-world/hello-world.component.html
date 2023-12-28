@@ -1,0 +1,35 @@
+<h1>NgIf Example 1</h1>
+<p *ngIf="true">Am I Visible to you?</p>
+
+<h1>NgIf Example 2</h1>
+<div class = "row">
+    <label for="">Checkbox</label>
+    <input type="checkbox" [(ngModel)]="showMe">
+</div>
+    <p *ngIf="showMe">Show me is checked</p>
+    <p *ngIf="!showMe">Show me is unchecked</p>
+
+<h1>NgIf-NgIfelse Example 2</h1>
+<div class = "row">
+    <label for="">Checkbox</label>
+    <input type="checkbox" [(ngModel)]="showMe">
+</div>
+    <p *ngIf="showMe; else elseBlock">Show me is checked</p>
+    <ng-template #elseBlock>
+        <p>Show me is unchecked</p>
+    </ng-template>
+    
+
+<h1>NgIf-else-then Example 2</h1>
+<div class = "row">
+    <label for="">Checkbox</label>
+    <input type="checkbox" [(ngModel)]="showMe">
+</div>
+    <div *ngIf="showMe; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock>
+        <p>Show me is checked</p>
+    </ng-template>
+    <ng-template #elseBlock>
+        <p>Show me is unchecked</p>
+    </ng-template>
+    

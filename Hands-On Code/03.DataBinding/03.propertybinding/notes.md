@@ -1,0 +1,1 @@
+one way data binding using property binding

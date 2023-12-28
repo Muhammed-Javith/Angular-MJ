@@ -1,0 +1,15 @@
+<div>
+
+  <label for="counterInput">Counter Input:</label>
+  <input type="text" class= "btn btn-secondary" id="counterInput" [(ngModel)]="counterinput">
+  <br><br>
+     <label for="actionType">Action Type</label>
+    <select class=" btn btn-warning dropdown" id="actionType" [(ngModel)]="actiontype">
+        <option value="add">Add</option>
+        <option value="remove">Remove</option>
+    </select>
+  <br><br>
+    <button class="btn btn-primary " (click)="OnIncrement()">Custom Increment</button>
+    <br>
+</div>
+

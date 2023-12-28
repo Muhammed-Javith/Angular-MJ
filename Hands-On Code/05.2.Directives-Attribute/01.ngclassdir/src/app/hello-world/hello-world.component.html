@@ -1,0 +1,36 @@
+<div [ngClass]="['primary', 'big']">
+    Sample Text
+</div>
+
+
+
+<div [ngClass]="['primary']">
+    Sample Text
+</div>
+
+
+
+<div [ngClass]="{'primary':false}">
+    Sample Text
+</div>
+
+
+
+Red:<input type = "checkbox" [(ngModel)]="enableRed">
+<div [ngClass]="{'primary':enableRed}">
+    Sample Text
+</div>
+
+
+Red:<input type = "checkbox" [(ngModel)]="enableRed">
+Big:<input type = "checkbox" [(ngModel)]="enableBig">
+Italic:<input type = "checkbox" [(ngModel)]="enableItalics">
+<div 
+[ngClass]="
+{
+    'primary':enableRed,
+    'big':enableBig,
+    'italics':enableItalics,
+}">
+    Sample Text
+</div>

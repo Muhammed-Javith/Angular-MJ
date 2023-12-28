@@ -1,0 +1,12 @@
+<p>list Component</p>
+<div *ngIf="cars.length>0; then carList; else Nodata" ></div>
+<ng-template #carList>
+    <ul>
+        <li *ngFor="let car of cars">
+            {{car}}
+        </li>
+    </ul>
+</ng-template>
+<ng-template #Nodata>
+    <h3>No Cars</h3>
+</ng-template>
